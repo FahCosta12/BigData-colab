@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
+import PickerSelect from "react-native-picker-select";
 
 import Database from "../../Database";
-import Dropdown from "../../components/Picker";
 
 function Register({ route, navigation }) {
   const id = route.params ? route.params.id : undefined;
@@ -22,6 +22,9 @@ function Register({ route, navigation }) {
     setQuantidade(route.params.quantidade.toString());
   }, [route]);
 
+  setTipoUnidade(route.params.tipoUnidade ? route.params.tipoUnidade : "Un");
+  const [tipoUnidade, setTipoUnidade] = useState("Un");
+
   function handleDescriptionChange(descricao) {
     setDescricao(descricao);
   }
@@ -29,6 +32,11 @@ function Register({ route, navigation }) {
   function handleQuantifyChange(quantidade) {
     setQuantidade(quantidade);
   }
+
+  function handleTipoUnidade(unidade) {
+    setTipoUnidade(unidade);
+  }
+  tipoUnidade: tipoUnidade;
 
   async function handleButtonPress() {
     const listItem = {
@@ -41,12 +49,14 @@ function Register({ route, navigation }) {
 
     handleDescriptionChange("");
     handleQuantifyChange("");
+    handleTipoUnidade("Un");
 
     navigation.setParams({
       quantidade: "",
       descricao: "",
       id: undefined,
     });
+    tipoUnidade: "Un";
   }
 
   const checkFields = () => {
@@ -67,7 +77,13 @@ function Register({ route, navigation }) {
           clearButtonMode="always"
           value={descricao}
         />
-
+        <PickerSelect
+          onValueChange={(value) => handleTipoUnidade(value)}
+          items={[
+            { label: "Unidade", value: "Un" },
+            { label: "Quilos", value: "Kg" },
+          ]}
+        />
         <TextInput
           style={styles.input}
           onChangeText={handleQuantifyChange}
@@ -76,7 +92,6 @@ function Register({ route, navigation }) {
           clearButtonMode="always"
           value={quantidade.toString()}
         />
-        <Dropdown />
         <TouchableOpacity
           disabled={checkFields()}
           style={{

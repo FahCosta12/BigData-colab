@@ -25,7 +25,7 @@ function List({ route, navigation }) {
             <Item
               key={item.id}
               id={item.id}
-              item={`${item.quantidade} de ${item.descricao}`}
+              item={`${item.quantidade} de ${item.descricao} - ${item.tipoUnidade}`}
               navigation={navigation}
             />
           );
