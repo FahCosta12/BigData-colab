@@ -76,13 +76,7 @@ function Register({ route, navigation }) {
           clearButtonMode="always"
           value={descricao}
         />
-        <PickerSelect
-          onValueChange={(value) => handleTipoUnidade(value)}
-          items={[
-            { label: "Unidade", value: "Un" },
-            { label: "Quilos", value: "Kg" },
-          ]}
-        />
+
         <TextInput
           style={styles.input}
           onChangeText={handleQuantifyChange}
@@ -91,6 +85,15 @@ function Register({ route, navigation }) {
           clearButtonMode="always"
           value={quantidade.toString()}
         />
+
+        <PickerSelect
+          onValueChange={(value) => handleTipoUnidade(value)}
+          items={[
+            { label: "Un", value: "Un" },
+            { label: "Kg", value: "Kg" },
+          ]}
+        />
+
         <TouchableOpacity
           disabled={checkFields()}
           style={{
