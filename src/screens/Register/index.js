@@ -15,15 +15,14 @@ function Register({ route, navigation }) {
   const id = route.params ? route.params.id : undefined;
   const [descricao, setDescricao] = useState("");
   const [quantidade, setQuantidade] = useState("");
+  const [tipoUnidade, setTipoUnidade] = useState("Un");
 
   useEffect(() => {
     if (!route.params) return;
     setDescricao(route.params.descricao);
     setQuantidade(route.params.quantidade.toString());
+    setTipoUnidade(route.params.tipoUnidade ? route.params.tipoUnidade : "Un");
   }, [route]);
-
-  setTipoUnidade(route.params.tipoUnidade ? route.params.tipoUnidade : "Un");
-  const [tipoUnidade, setTipoUnidade] = useState("Un");
 
   function handleDescriptionChange(descricao) {
     setDescricao(descricao);
@@ -36,12 +35,12 @@ function Register({ route, navigation }) {
   function handleTipoUnidade(unidade) {
     setTipoUnidade(unidade);
   }
-  tipoUnidade: tipoUnidade;
-
+  /*Botão de salvar*/
   async function handleButtonPress() {
     const listItem = {
       descricao,
       quantidade: parseInt(quantidade),
+      tipoUnidade,
     };
     Database.saveItem(listItem, id).then((_response) =>
       navigation.navigate("List", listItem)
@@ -55,8 +54,8 @@ function Register({ route, navigation }) {
       quantidade: "",
       descricao: "",
       id: undefined,
+      tipoUnidade: "Un",
     });
-    tipoUnidade: "Un";
   }
 
   const checkFields = () => {
